@@ -1,6 +1,6 @@
 <x-layouts.app>
 
 <p>Ahoj z dashboardu</p>
-<h1 class="text-3xl">Tailwind</h1>
+<a href="{{ route('dashboard.content.edit') }}">Upravit obsah webu</a>
 
 </x-layouts.app>
