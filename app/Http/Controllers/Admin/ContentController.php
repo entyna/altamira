@@ -24,17 +24,28 @@ class ContentController extends Controller
 
     public function update(Request $request)
     {
-    // 1. Iterate through the incoming data and update the database
-    foreach ($request->input('content') as $key => $translations) {
-        foreach ($translations as $lang => $value) {
-            Content::updateOrCreate(
-                ['key' => $key, 'lang' => $lang],
-                ['value' => $value]
-            );
-        }
-    }
 
-    // 2. Redirect back with a success message
-    return redirect()->route('dashboard.content.edit')->with('success', 'Změny uloženy');
-}
+        foreach ($request->input('content') as $key => $translations) {
+            foreach ($translations as $lang => $value) {
+                Content::updateOrCreate(
+                    ['key' => $key, 'lang' => $lang],
+                    ['value' => $value]
+                );
+            }
+        }
+
+        $request->validate([
+            'infobox-visible' => 'nullable|boolean',
+        ]);
+
+        $infoboxVisible = Setting::where('key', 'infobox-visible')->first();
+
+        if ($infoboxVisible) {
+            $infoboxVisible->value = $request->has('infobox-visible') ? 1 : 0;
+            $infoboxVisible->save();
+        }
+
+
+        return redirect()->route('dashboard.content.edit')->with('success', 'Změny uloženy');
+    }
 }

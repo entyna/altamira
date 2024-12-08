@@ -6,14 +6,16 @@
 
 <form action="{{ route('dashboard.content.update') }}" method="POST" class="flex flex-col gap-4">
     @csrf
-    <input 
-            type="checkbox" 
-            name="infobox-visible" 
-            id="show_infobox" 
-            value="1" 
-            @if($infoboxVisible && $infoboxVisible->value) checked @endif 
+    <div>
+        <input 
+                type="checkbox" 
+                name="infobox-visible" 
+                id="show_infobox" 
+                value="1" 
+                @if($infoboxVisible && $infoboxVisible->value) checked @endif 
         >
-    <label for="infobox-visible"></label>
+        <label for="infobox-visible">Zobrazit infobox na webu</label>
+    </div>
     <div>
         <h2>Nadpis infoboxu</h2>
             @foreach ($content['infobox-heading'] as $translation)
